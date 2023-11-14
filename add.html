@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grade of BSIT 201</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>	
+		<div class="separator-100"></div>
+		<div class="main-container flex">
+			<div class="main-student">
+				<div class="error-handler"></div>
+				<div class="frm-hldr">
+					<label for="">First Name:</label>
+					<input type="text" name="" id="txtFname">
+				</div>
+				<div class="frm-hldr">
+					<label for="">Last Name:</label>
+					<input type="text" name="" id="txtLname">
+				</div>
+				<div class="frm-hldr">
+					<label for="">Middle Name:</label>
+					<input type="text" name="" id="txtMname">
+				</div>
+				<div class="flex"><button class="btn-set diabled" onclick="setData()">Add Student</button></div>
+			</div>
+		</div>
+
+</body>
+<script>
+	let id = 0;
+	let datas = [];
+	let storedArray = null;
+
+	if(localStorage.length>0){
+
+		// localStorage.setItem('datas',JSON.stringify(datas));
+
+		storedArray = JSON.parse(localStorage.getItem("datas"));
+
+		datas = storedArray;
+		console.log(localStorage);
+	}	
+
+	function generateID(datas){
+		let setID = 0;
+			setID = datas.length-1;		
+		if(datas.length===0){	
+			setID = 0;
+		}else{			
+			setID = datas[setID].data_id;
+			setID++;			
+		}
+		return setID;
+	}
+
+	function setData(){
+		let first = document.querySelector('#txtFname');
+		let last = document.querySelector('#txtLname');
+		let middle = document.querySelector('#txtMname');
+
+		if(first.value == '' || last.value == ''){
+			alert('Don\'t leave the textbox empty!');
+		}else{			
+			datas = JSON.parse(localStorage.getItem("datas"))?JSON.parse(localStorage.getItem("datas")):[];
+			setID = generateID(datas);
+			let lastI = datas.length==0?0:setID;
+			let added = 
+				{
+					'data_id' : lastI,
+					'first' : first.value,
+					'last' : last.value,
+					'middle' : middle.value,
+					'grade1' : '50',
+					'grade2' : '50',
+					'grade3' : '50',
+					'grade4' : '50',
+					'grade5' : '50',
+					'grade6' : '50',
+					'grade7' : '50',
+					'average' : '50'
+				};
+
+			datas.push(added);
+
+			localStorage.setItem('datas',JSON.stringify(datas));
+
+			alert(first.value+' '+last.value+ ', data successfully saved!');
+
+			let current =window.location.href;
+			// window.location.href = current;
+		}
+
+	}
+
+
+</script>
+</html>
